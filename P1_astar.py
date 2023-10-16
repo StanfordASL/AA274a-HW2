@@ -40,7 +40,11 @@ class AStar(object):
               useful here
         """
         ########## Code starts here ##########
-        raise NotImplementedError("is_free not implemented")
+        for obs in self.obstacles:
+            if (x[0] >= obs[0][1]  or x[0] <= obs[0][0] + self.width) \
+            and  (x[1] >= obs[1][1] or x[1] <= obs[1][0]):
+                return True
+        return False
         ########## Code ends here ##########
 
     def distance(self, x1, x2):
