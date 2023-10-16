@@ -59,7 +59,7 @@ class AStar(object):
         HINT: This should take one line. Tuples can be converted to numpy arrays using np.array().
         """
         ########## Code starts here ##########
-        raise NotImplementedError("distance not implemented")
+        return np.sqrt((np.array(x2)[0] - np.array(x1)[0])**2 + (np.array(x2)[1] - np.array(x1)[1])**2)
         ########## Code ends here ##########
 
     def snap_to_grid(self, x):
@@ -95,9 +95,21 @@ class AStar(object):
         """
         neighbors = []
         ########## Code starts here ##########
-        raise NotImplementedError("get_neighbors not implemented")
+        neighbor_list = []
+        neighbor_list.append(snap_to_grid(x[0] + self.resolution, x[1]))
+        neighbor_list.append(snap_to_grid(x[0] - self.resolution, x[1]))
+        neighbor_list.append(snap_to_grid(x[0], x[1] + self.resolution))
+        neighbor_list.append(snap_to_grid(x[0], x[1] - self.resolution))
+        neighbor_list.append(snap_to_grid(x[0] + self.resolution, x[1] + self.resolution))
+        neighbor_list.append(snap_to_grid(x[0] - self.resolution, x[1] + self.resolution))
+        neighbor_list.append(snap_to_grid(x[0] - self.resolution, x[1] - self.resolution))
+        neighbor_list.append(snap_to_grid(x[0] + self.resolution, x[1] - self.resolution))
+        
+        for neighbor in neighbor_list:
+            if is_free(neighbor):
+                neighbors.append(neighbor)
         ########## Code ends here ##########
-        return neighbors
+        return tuple(neighbors)
 
     def find_best_est_cost_through(self):
         """
